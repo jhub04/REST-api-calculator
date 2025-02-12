@@ -1,5 +1,7 @@
 package stud.ntnu.no.calculator.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +13,7 @@ import stud.ntnu.no.calculator.service.CalculatorService;
 @org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/calculator")
 public class RestController {
+  private static final Logger logger = LoggerFactory.getLogger(RestController.class);
   private final CalculatorService service;
 
   @Autowired
@@ -20,7 +23,7 @@ public class RestController {
 
   @PostMapping("/calculate")
   public CalculationResponse calculate(@RequestBody CalculationRequest request) {
-    System.out.println(request.getNum1() + " " + request.getOperator() + " " + request.getNum2());
+    logger.info("Received calculation request: {} {} {}", request.getNum1(), request.getOperator(), request.getNum2());
     double result = service.calculate(request);
     return new CalculationResponse(result);
   }

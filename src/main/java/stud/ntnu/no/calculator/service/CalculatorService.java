@@ -1,10 +1,13 @@
 package stud.ntnu.no.calculator.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import stud.ntnu.no.calculator.model.CalculationRequest;
 
 @Service
 public class CalculatorService {
+  private final static Logger logger = LoggerFactory.getLogger(CalculatorService.class);
 
   public double calculate(CalculationRequest request) {
     String operator = request.getOperator();
@@ -30,6 +33,7 @@ public class CalculatorService {
       default:
         throw new IllegalStateException("Illegal operator: " + operator);
     }
+    logger.info("Calculated {} {} {} = {}", num1, operator, num2, result);
     return result;
   }
 }
