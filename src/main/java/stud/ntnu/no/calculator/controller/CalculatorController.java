@@ -15,12 +15,12 @@ import stud.ntnu.no.calculator.service.CalculatorService;
 
 @org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/calculator")
-public class RestController {
-  private static final Logger logger = LoggerFactory.getLogger(RestController.class);
+public class CalculatorController {
+  private static final Logger logger = LoggerFactory.getLogger(CalculatorController.class);
   private final CalculatorService service;
 
   @Autowired
-  public RestController(CalculatorService service) {
+  public CalculatorController(CalculatorService service) {
     this.service = service;
   }
   @CrossOrigin(origins = "http://localhost:5173/")
