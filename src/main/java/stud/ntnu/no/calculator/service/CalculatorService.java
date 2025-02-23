@@ -3,16 +3,16 @@ package stud.ntnu.no.calculator.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import stud.ntnu.no.calculator.model.CalculationRequest;
+import stud.ntnu.no.calculator.model.Calculation;
 
 @Service
 public class CalculatorService {
   private final static Logger logger = LoggerFactory.getLogger(CalculatorService.class);
 
-  public double calculate(CalculationRequest request) {
-    String operator = request.getOperator();
-    double num1 = request.getNum1();
-    double num2 = request.getNum2();
+  public double calculate(Calculation calculation) {
+    String operator = calculation.getOperator();
+    double num1 = calculation.getNum1();
+    double num2 = calculation.getNum2();
     double result;
     switch (operator) {
       case "+":
