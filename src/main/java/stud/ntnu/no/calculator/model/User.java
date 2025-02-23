@@ -1,6 +1,11 @@
 package stud.ntnu.no.calculator.model;
 
-public class LoginRequest {
+public class User {
+
+  public User(String username, String password) {
+    this.username = username;
+    this.password = password;
+  }
 
   public String getPassword() {
     return password;
