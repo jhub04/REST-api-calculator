@@ -1,4 +1,5 @@
 package stud.ntnu.no.calculator.dao;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -11,6 +12,20 @@ public class UserRepository {
   @Autowired
   public UserRepository(JdbcTemplate jdbcTemplate) {
     this.jdbcTemplate = jdbcTemplate;
+  }
+
+  public Optional<User> findByUsername(String username) {
+    String sql = "SELECT * FROM users WHERE username = ?";
+    return jdbcTemplate.query(sql, new Object[]{username}, rs -> {
+      if (rs.next()) {
+        User user = new User();
+        user.setId(rs.getInt("id"));
+        user.setUsername(rs.getString("username"));
+        user.setPassword(rs.getString("password"));
+        return Optional.of(user);
+      }
+      return Optional.empty();
+    });
   }
 
   public void register(User user) {

@@ -28,7 +28,7 @@ public class AuthController {
   @PostMapping("/login")
   public ResponseEntity<?> login(@RequestBody User request) {
     logger.info("Received login request {} {}", request.getUsername(), request.getPassword());
-    userRepository.register(new User(request.getUsername(), request.getPassword()));
+    userRepository.register(new User(request.getId(), request.getUsername(), request.getPassword()));
     return new ResponseEntity<>(HttpStatus.OK);
   }
 }
