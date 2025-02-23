@@ -1,5 +1,6 @@
 package stud.ntnu.no.calculator.controller;
 
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,20 @@ public class AuthController {
 
   @CrossOrigin(origins = "http://localhost:5173/")
   @PostMapping("/login")
-  public ResponseEntity<?> login(@RequestBody User request) {
-    logger.info("Received login request {} {}", request.getUsername(), request.getPassword());
-    userRepository.register(new User(request.getId(), request.getUsername(), request.getPassword()));
-    return new ResponseEntity<>(HttpStatus.OK);
+  public String login(@RequestBody User user) {
+    logger.info("Received login request {} {}", user.getUsername(), user.getPassword());
+    Optional<User> dbUser = userRepository.findByUsername(user.getUsername());
+    if (dbUser.isPresent() && dbUser.get().getPassword().equals(user.getPassword())) {
+      return "Login successful";
+    }
+    return "Invalid username or password";
+  }
+
+  @CrossOrigin(origins = "http://localhost:5173/")
+  @PostMapping("/register")
+  public String register(@RequestBody User user) {
+    logger.info("Received registration request {} {}", user.getUsername(), user.getPassword());
+    userRepository.save(user);
+    return "User registered successfully";
   }
 }
