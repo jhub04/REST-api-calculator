@@ -14,7 +14,7 @@ import stud.ntnu.no.calculator.model.CalculationResponse;
 import stud.ntnu.no.calculator.service.CalculatorService;
 
 @org.springframework.web.bind.annotation.RestController
-@RequestMapping("/api/calculator")
+@RequestMapping("/calculator")
 public class CalculatorController {
   private static final Logger logger = LoggerFactory.getLogger(CalculatorController.class);
   private final CalculatorService service;
