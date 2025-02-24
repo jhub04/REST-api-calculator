@@ -14,7 +14,7 @@ public class UserRepository {
     this.jdbcTemplate = jdbcTemplate;
   }
 
-  public Optional<User> findByUsername(String username) {
+  public Optional<User> findUserByUsername(String username) {
     String sql = "SELECT * FROM users WHERE username = ?";
     return jdbcTemplate.query(sql, new Object[]{username}, rs -> {
       if (rs.next()) {
@@ -28,7 +28,7 @@ public class UserRepository {
     });
   }
 
-  public void save(User user) {
+  public void createUser(User user) {
     String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
     jdbcTemplate.update(sql, user.getUsername(), user.getPassword());
   }

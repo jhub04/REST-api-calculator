@@ -13,34 +13,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import stud.ntnu.no.calculator.dao.UserRepository;
 import stud.ntnu.no.calculator.model.User;
+import stud.ntnu.no.calculator.service.AuthService;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
   private static final Logger logger = LoggerFactory.getLogger(CalculatorController.class);
-  private final UserRepository userRepository;
+  private final AuthService authService;
 
   @Autowired
-  public AuthController(UserRepository userRepository) {
-    this.userRepository = userRepository;
-  }
+  public AuthController(AuthService authService) {this.authService = authService;}
 
   @CrossOrigin(origins = "http://localhost:5173/")
   @PostMapping("/login")
-  public String login(@RequestBody User user) {
-    logger.info("Received login request {} {}", user.getUsername(), user.getPassword());
-    Optional<User> dbUser = userRepository.findByUsername(user.getUsername());
-    if (dbUser.isPresent() && dbUser.get().getPassword().equals(user.getPassword())) {
-      return "Login successful";
-    }
-    return "Invalid username or password";
+  public ResponseEntity<User> login(@RequestBody User request) {
+    User user = authService.authenticate(request.getUsername(), request.getPassword());
+    return ResponseEntity.ok(user);
   }
 
   @CrossOrigin(origins = "http://localhost:5173/")
   @PostMapping("/register")
-  public String register(@RequestBody User user) {
-    logger.info("Received registration request {} {}", user.getUsername(), user.getPassword());
-    userRepository.save(user);
-    return "User registered successfully";
+  public ResponseEntity<?> register(@RequestBody User user) {
+    authService.register(user);
+    return ResponseEntity.ok().build();
+
   }
 }
