@@ -1,32 +1,52 @@
 package stud.ntnu.no.calculator.model;
 
+import java.time.LocalDateTime;
+
 public class Calculation {
-  private double num1;
-  private double num2;
-  private String operator;
+  private int id;
+  private int userId;
+  private String expression;
+  private String result;
+  private LocalDateTime createdAt;
 
-  public double getNum1() {
-    return num1;
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
   }
 
-  public void setNum1(double num1) {
-    this.num1 = num1;
+  public void setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
   }
 
-  public double getNum2() {
-    return num2;
+  public String getResult() {
+    return result;
   }
 
-  public void setNum2(double num2) {
-    this.num2 = num2;
+  public void setResult(String result) {
+    this.result = result;
   }
 
-  public String getOperator() {
-    return operator;
+  public String getExpression() {
+    return expression;
   }
 
-  public void setOperator(String operator) {
-    this.operator = operator;
+  public void setExpression(String expression) {
+    this.expression = expression;
+  }
+
+  public int getUserId() {
+    return userId;
+  }
+
+  public void setUserId(int userId) {
+    this.userId = userId;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
 }
