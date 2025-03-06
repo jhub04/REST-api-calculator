@@ -38,6 +38,7 @@ public class CalculatorController {
   @CrossOrigin(origins = "http://localhost:5173/")
   @PostMapping("/calculate")
   public ResponseEntity<Calculation> saveCalculation(@RequestBody Calculation calculation) {
+    logger.info("User with id {} Requested to save calculation: {} = {}", calculation.getUserId(), calculation.getExpression(), calculation.getResult());
     calculatorService.saveCalculation(calculation);
     return ResponseEntity.ok(calculation);
   }
