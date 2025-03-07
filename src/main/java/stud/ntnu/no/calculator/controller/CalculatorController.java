@@ -29,10 +29,10 @@ public class CalculatorController {
   @CrossOrigin(origins = "http://localhost:5173/")
   @GetMapping
   public ResponseEntity<List<Calculation>> getCalculations(
-      @RequestParam int userId,
+      @RequestParam String userName,
       @RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "10") int size) {
-    return ResponseEntity.ok(calculatorService.getCalculations(userId, page, size));
+    return ResponseEntity.ok(calculatorService.getCalculations(userName, page, size));
   }
 
   @CrossOrigin(origins = "http://localhost:5173/")

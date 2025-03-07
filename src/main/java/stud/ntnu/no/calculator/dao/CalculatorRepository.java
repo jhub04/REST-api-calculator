@@ -1,7 +1,9 @@
 package stud.ntnu.no.calculator.dao;
 
+import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -14,7 +16,15 @@ public class CalculatorRepository {
   @Autowired
   public CalculatorRepository(JdbcTemplate jdbcTemplate) {this.jdbcTemplate = jdbcTemplate;}
 
-  public List<Calculation> findCalculationsByUserId(int userId, int limit, int offset) {
+  public List<Calculation> findCalculationsByUserName(String userName, int limit, int offset) {
+    String userIdQuery = "SELECT id FROM users WHERE username = ?";
+    int userId;
+    try {
+      userId = jdbcTemplate.queryForObject(userIdQuery, int.class, userName);
+    } catch (EmptyResultDataAccessException e) {
+      return Collections.emptyList();
+    }
+
     String sql = "SELECT * FROM calculations WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?";
     return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Calculation.class), userId, limit, offset);
   }

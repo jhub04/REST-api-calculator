@@ -14,8 +14,8 @@ public class CalculatorService {
 
   public CalculatorService(CalculatorRepository calculatorRepository) {this.calculatorRepository = calculatorRepository;}
 
-  public List<Calculation> getCalculations(int userId, int page, int size) {
-    return calculatorRepository.findCalculationsByUserId(userId, size, page*size);
+  public List<Calculation> getCalculations(String userName, int page, int size) {
+    return calculatorRepository.findCalculationsByUserName(userName, size, page*size);
   }
 
   public void saveCalculation(Calculation calculation) {
