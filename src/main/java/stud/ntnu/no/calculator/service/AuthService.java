@@ -2,7 +2,6 @@ package stud.ntnu.no.calculator.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import stud.ntnu.no.calculator.controller.AuthController;
 import stud.ntnu.no.calculator.dao.UserRepository;
 import stud.ntnu.no.calculator.model.User;
 
