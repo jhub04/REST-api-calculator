@@ -2,6 +2,8 @@ package stud.ntnu.no.calculator.controller;
 
 import java.time.Duration;
 import java.time.Instant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
@@ -30,7 +32,7 @@ public class TokenController {
   public TokenController(AuthService authService) {
     this.authService = authService;
   }
-
+  private static final Logger logger = LoggerFactory.getLogger(CalculatorController.class);
   public static final String keyStr = "testsecrettestsecrettestsecrettestsecrettestsecret";
   private static final Duration JWT_TOKEN_VALIDITY = Duration.ofMinutes(5);
 
@@ -39,8 +41,10 @@ public class TokenController {
   @ResponseStatus(value = HttpStatus.CREATED)
   public String generateToken(@RequestBody User user) throws Exception {
     if (this.authService.authenticate(user.getUsername(), user.getPassword()) != null) {
+      logger.info("Generating token...");
       return generateToken(user.getUsername());
     }
+    logger.info("Token couldn't be generated...");
     throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Access denied, wrong credentials....");
   }
 
