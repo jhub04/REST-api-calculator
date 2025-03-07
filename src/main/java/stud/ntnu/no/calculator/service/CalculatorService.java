@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import stud.ntnu.no.calculator.dao.CalculatorRepository;
 import stud.ntnu.no.calculator.model.Calculation;
+import stud.ntnu.no.calculator.model.CalculationRequest;
 
 @Service
 public class CalculatorService {
@@ -18,7 +19,7 @@ public class CalculatorService {
     return calculatorRepository.findCalculationsByUserName(userName, size, page*size);
   }
 
-  public void saveCalculation(Calculation calculation) {
-    calculatorRepository.saveCalculation(calculation);
+  public void saveCalculation(CalculationRequest request) {
+    calculatorRepository.saveCalculation(request);
   }
 }

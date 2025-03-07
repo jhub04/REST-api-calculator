@@ -39,7 +39,7 @@ public class TokenController {
   @CrossOrigin(origins = "http://localhost:5173/")
   @PostMapping(value = "")
   @ResponseStatus(value = HttpStatus.CREATED)
-  public String generateToken(@RequestBody User user) throws Exception {
+  public String generateToken(@RequestBody User user) {
     if (this.authService.authenticate(user.getUsername(), user.getPassword()) != null) {
       logger.info("Generating token...");
       return generateToken(user.getUsername());

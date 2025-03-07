@@ -17,12 +17,4 @@ public class AuthService {
         .filter(user -> user.getPassword().equals(password))
         .orElseThrow(() -> new RuntimeException("Invalid credentials"));
   }
-
-  public void register(User user) {
-    if (userRepository.findUserByUsername(user.getUsername()).isPresent()) {
-      throw new RuntimeException("Username already exists");
-    }
-    userRepository.createUser(user);
-  }
-
 }

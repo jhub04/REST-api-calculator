@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import stud.ntnu.no.calculator.model.Calculation;
+import stud.ntnu.no.calculator.model.CalculationRequest;
 import stud.ntnu.no.calculator.model.Result;
 import stud.ntnu.no.calculator.service.CalculatorService;
 
@@ -37,9 +38,9 @@ public class CalculatorController {
 
   @CrossOrigin(origins = "http://localhost:5173/")
   @PostMapping("/calculate")
-  public ResponseEntity<Calculation> saveCalculation(@RequestBody Calculation calculation) {
-    logger.info("User with id {} Requested to save calculation: {} = {}", calculation.getUserId(), calculation.getExpression(), calculation.getResult());
-    calculatorService.saveCalculation(calculation);
-    return ResponseEntity.ok(calculation);
+  public ResponseEntity<?> saveCalculation(@RequestBody CalculationRequest request) {
+    logger.info("User with username {} Requested to save calculation: {} = {}", request.getUserName(), request.getExpression(), request.getResult());
+    calculatorService.saveCalculation(request);
+    return ResponseEntity.ok(request);
   }
 }
