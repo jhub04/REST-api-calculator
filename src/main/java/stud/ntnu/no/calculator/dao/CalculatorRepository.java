@@ -30,17 +30,18 @@ public class CalculatorRepository {
     return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Calculation.class), userId, limit, offset);
   }
 
-  public void saveCalculation(CalculationRequest request) {
+  public void saveCalculation(String userName, String expression, double result) {
     String userIdQuery = "SELECT id FROM users WHERE username = ?";
     int userId;
     try {
-      userId = jdbcTemplate.queryForObject(userIdQuery, int.class, request.getUserName());
+      userId = jdbcTemplate.queryForObject(userIdQuery, int.class, userName);
     } catch (EmptyResultDataAccessException e) {
       throw new EmptyResultDataAccessException(1);
     }
 
     String sql = "INSERT INTO calculations (user_id, expression, result) VALUES (?, ?, ?)";
-    jdbcTemplate.update(sql, userId, request.getExpression(), request.getResult());
+    jdbcTemplate.update(sql, userId, expression, result);
   }
+
 
 }

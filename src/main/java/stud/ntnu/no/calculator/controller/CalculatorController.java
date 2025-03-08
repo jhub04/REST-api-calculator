@@ -1,6 +1,7 @@
 package stud.ntnu.no.calculator.controller;
 
 import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,22 @@ public class CalculatorController {
 
   @CrossOrigin(origins = "http://localhost:5173/")
   @PostMapping("/calculate")
-  public ResponseEntity<?> saveCalculation(@RequestBody CalculationRequest request) {
-    logger.info("User with username {} Requested to save calculation: {} = {}", request.getUserName(), request.getExpression(), request.getResult());
-    calculatorService.saveCalculation(request);
-    return ResponseEntity.ok(request);
+  public ResponseEntity<?> calculateAndSave(@RequestBody CalculationRequest request) {
+    logger.info("User with username {} Requested to calculate: {}", request.getUserName(), request.getExpression());
+
+    // Compute the result
+    double result;
+    try {
+      result = calculatorService.evaluateExpression(request.getExpression());
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity.badRequest().body("Invalid expression");
+    }
+
+    // Save the calculation
+    calculatorService.saveCalculation(request.getUserName(), request.getExpression(), result);
+
+    // Return the calculated result
+    return ResponseEntity.ok(Map.of("expression", request.getExpression(), "result", result));
   }
+
 }

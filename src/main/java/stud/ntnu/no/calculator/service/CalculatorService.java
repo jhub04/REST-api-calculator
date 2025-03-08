@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import stud.ntnu.no.calculator.dao.CalculatorRepository;
 import stud.ntnu.no.calculator.model.Calculation;
 import stud.ntnu.no.calculator.model.CalculationRequest;
+import net.objecthunter.exp4j.Expression;
+import net.objecthunter.exp4j.ExpressionBuilder;
 
 @Service
 public class CalculatorService {
@@ -19,7 +21,12 @@ public class CalculatorService {
     return calculatorRepository.findCalculationsByUserName(userName, size, page*size);
   }
 
-  public void saveCalculation(CalculationRequest request) {
-    calculatorRepository.saveCalculation(request);
+  public void saveCalculation(String userName, String expression, double result) {
+    calculatorRepository.saveCalculation(userName, expression, result);
+  }
+
+  public double evaluateExpression(String expression) {
+    Expression calculation = new ExpressionBuilder(expression).build();
+    return calculation.evaluate();
   }
 }
