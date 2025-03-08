@@ -40,6 +40,7 @@ public class TokenController {
   @PostMapping(value = "")
   @ResponseStatus(value = HttpStatus.CREATED)
   public String generateToken(@RequestBody User user) {
+    logger.info("Received request to generate token");
     if (this.authService.authenticate(user.getUsername(), user.getPassword()) != null) {
       logger.info("Generating token...");
       return generateToken(user.getUsername());

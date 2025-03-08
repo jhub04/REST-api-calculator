@@ -33,6 +33,7 @@ public class CalculatorController {
       @RequestParam String userName,
       @RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "10") int size) {
+    logger.info("Request to fetch calculations");
     return ResponseEntity.ok(calculatorService.getCalculations(userName, page, size));
   }
 
