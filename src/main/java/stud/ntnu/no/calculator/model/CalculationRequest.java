@@ -19,21 +19,11 @@ public class CalculationRequest {
     this.expression = expression;
   }
 
-  public String getResult() {
-    return result;
-  }
-
-  public void setResult(String result) {
-    this.result = result;
-  }
-
   private String expression;
-  private String result;
 
-  public CalculationRequest(String userName, String expression, String result) {
+  public CalculationRequest(String userName, String expression) {
     this.userName = userName;
     this.expression = expression;
-    this.result = result;
   }
 
 

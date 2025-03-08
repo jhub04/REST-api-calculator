@@ -43,7 +43,6 @@ public class CalculatorController {
   public ResponseEntity<?> calculateAndSave(@RequestBody CalculationRequest request) {
     logger.info("User with username {} Requested to calculate: {}", request.getUserName(), request.getExpression());
 
-    // Compute the result
     double result;
     try {
       result = calculatorService.evaluateExpression(request.getExpression());
@@ -51,10 +50,9 @@ public class CalculatorController {
       return ResponseEntity.badRequest().body("Invalid expression");
     }
 
-    // Save the calculation
     calculatorService.saveCalculation(request.getUserName(), request.getExpression(), result);
+    logger.info("Calculation saved in the database");
 
-    // Return the calculated result
     return ResponseEntity.ok(Map.of("expression", request.getExpression(), "result", result));
   }
 
